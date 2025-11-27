@@ -10,10 +10,12 @@ const commands = {
     },
     ticket: {
         name: "Aya Ticketing System",
+        description: "Usage: ticket <ticket_number>",
         url: "https://ayadev.atlassian.net/browse/{0}"
     },
     cf: {
         name: "Conflience",
+        description: "Usage: cf <search_terms>",
         url: "https://ayadev.atlassian.net/wiki/search?text=%s"
     }
 };

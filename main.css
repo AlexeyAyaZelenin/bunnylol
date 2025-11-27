@@ -9,10 +9,8 @@ td {
     font-weight: normal;
     background-color: #ffffff;
 }
-table thead tr {
-    background-color: #f2f2f2;
-}
 table thead td {
+    background-color: #f2f2f2;
     font-weight: bold;
     font-size: larger;
 }
