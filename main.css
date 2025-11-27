@@ -3,10 +3,11 @@ table {
     border-collapse: collapse;
 }
 td {
-    border: 1px solid #ddd;
+    border: 1px solid #666;
     padding: 8px;
     text-align: left;
-
+    font-weight: normal;
+    background-color: #ffffff;
 }
 table thead tr {
     background-color: #f2f2f2;
