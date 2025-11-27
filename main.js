@@ -47,6 +47,7 @@ const processRedirect = () =>{
                 ? prepareCommandUrl(command.searchUrl || command.url, urlParams) 
                 : command.url;
             console.log(`Redirecting to ${finalUrl}`);
+            window.location.href = finalUrl;
         } else {
             console.log(`Command not found for key: ${commandKey}`);
             showAllCommands();
@@ -55,7 +56,6 @@ const processRedirect = () =>{
         console.log('No S Param provided');
         showAllCommands();
     }
-
 }
 
 (function () {
@@ -69,4 +69,5 @@ const processRedirect = () =>{
     ready(() => {
         processRedirect();
     });
+
 })();
