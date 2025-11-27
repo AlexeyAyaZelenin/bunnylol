@@ -6,7 +6,6 @@ const getSParam = () => {
 }
 
 const prepareCommandUrl = (urlTemplate, urlParams) => {
-    console.log(`Preparing URL from template: ${urlTemplate} with params: ${urlParams}`);
     let preparedUrl = urlTemplate;
     const paramsArray = urlParams.split(' ');
     paramsArray.forEach((param, index) => {
@@ -16,22 +15,21 @@ const prepareCommandUrl = (urlTemplate, urlParams) => {
     return preparedUrl;
 }
 
+const addRow = (table, value1, value2) => {
+    const row = table.insertRow();
+    const cell1 = row.insertCell(0);
+    const cell2 = row.insertCell(1);
+    cell1.innerHTML = value1;
+    cell2.innerHTML = value2;
+}
+
 const showAllCommands = () => {
     const table = document.createElement('table');
     const head = table.createTHead();
-    const row = head.insertRow();
-    const cellKey = row.insertCell(0);
-    const cellName = row.insertCell(1);
-    cellKey.innerHTML = '<b>Command</b>';
-    cellName.innerHTML = '<b>Name</b>';
+    addRow(head, 'Command', 'Name');
     
     Object.keys(commands).forEach(key => {
-        const row = table.insertRow();
-        const cellKey = row.insertCell(0);
-        const cellName = row.insertCell(1);
-        cellKey.innerHTML = key;
-        cellName.innerHTML = commands[key].name;
-        console.log(`${key}: ${commands[key].name}`);
+        addRow(table, key, commands[key].name);
     });
     document.body.appendChild(table);
 };
