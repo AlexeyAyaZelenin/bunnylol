@@ -15,14 +15,18 @@ const prepareCommandUrl = (urlTemplate, urlParams) => {
     return preparedUrl;
 }
 
+const escapeHtml = (unsafe) => unsafe
+         .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+
 const addRow = (table, value1, value2, value3 = '') => {
     const row = table.insertRow();
     const cell1 = row.insertCell(0);
     const cell2 = row.insertCell(1);
     const cell3 = row.insertCell(2);
-    cell1.innerHTML = value1;
-    cell2.innerHTML = value2;
-    cell3.innerHTML = value3;
+    
+    cell1.innerHTML = escapeHtml(value1);
+    cell2.innerHTML = escapeHtml(value2);
+    cell3.innerHTML = escapeHtml(value3);
 }
 
 const showAllCommands = () => {
@@ -30,8 +34,9 @@ const showAllCommands = () => {
     const head = table.createTHead();
     addRow(head, 'Command', 'Name', 'Description');
     
+    const body = table.createTBody();
     Object.keys(commands).forEach(key => {
-        addRow(table, key, commands[key].name, commands[key].description || '');
+        addRow(body, key, commands[key].name, commands[key].description || '');
     });
     document.body.appendChild(table);
 };
