@@ -15,28 +15,41 @@ const prepareCommandUrl = (urlTemplate, urlParams) => {
     return preparedUrl;
 }
 
-const escapeHtml = (unsafe) => unsafe
-         .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+const findCommandByKey = (input) => {
+    const commandKey = sParam.split(' ')[0];
+    const command = commands[commandKey];
+    if (command) {
+        return { commandKey: commandKey, command };
+    }
+    return null;
+}
 
-const addRow = (table, value1, value2, value3 = '') => {
-    const row = table.insertRow();
-    const cell1 = row.insertCell(0);
-    const cell2 = row.insertCell(1);
-    const cell3 = row.insertCell(2);
-    
-    cell1.innerHTML = escapeHtml(value1);
-    cell2.innerHTML = escapeHtml(value2);
-    cell3.innerHTML = escapeHtml(value3);
+const findCommandByPrefix = (input) => {
+    for (const key in commands) {
+        const command = commands[key];
+        if (command.prefix && input.startsWith(command.prefix)) {
+            return { commandKey: command.prefix, command };
+        }
+    }
+    return null;
 }
 
 const showAllCommands = () => {
     const table = document.createElement('table');
     const head = table.createTHead();
-    addRow(head, 'Command', 'Name', 'Description');
+    const row = head.insertRow();
+    const cellKey = row.insertCell(0);
+    const cellName = row.insertCell(1);
+    cellKey.innerHTML = '<b>Command</b>';
+    cellName.innerHTML = '<b>Name</b>';
     
-    const body = table.createTBody();
     Object.keys(commands).forEach(key => {
-        addRow(body, key, commands[key].name, commands[key].description || '');
+        const row = table.insertRow();
+        const cellKey = row.insertCell(0);
+        const cellName = row.insertCell(1);
+        cellKey.innerHTML = key;
+        cellName.innerHTML = commands[key].name;
+        console.log(`${key}: ${commands[key].name}`);
     });
     document.body.appendChild(table);
 };
@@ -44,8 +57,7 @@ const showAllCommands = () => {
 const processRedirect = () =>{
     const sParam = getSParam();
     if (sParam) {
-        const commandKey = sParam.split(' ')[0];
-        const command = commands[commandKey];
+        const { commandKey, command } = findCommandByKey(sParam) || findCommandByPrefix(sParam) || {};
         if (command) {
             const urlParams = sParam.substring(commandKey.length).trim();
             const finalUrl = urlParams 
@@ -54,6 +66,7 @@ const processRedirect = () =>{
             console.log(`Redirecting to ${finalUrl}`);
             window.location.href = finalUrl;
         } else {
+            // Check by prefix
             console.log(`Command not found for key: ${commandKey}`);
             showAllCommands();
         }
@@ -61,6 +74,7 @@ const processRedirect = () =>{
         console.log('No S Param provided');
         showAllCommands();
     }
+
 }
 
 (function () {
@@ -74,5 +88,4 @@ const processRedirect = () =>{
     ready(() => {
         processRedirect();
     });
-
 })();
