@@ -16,7 +16,7 @@ const prepareCommandUrl = (urlTemplate, urlParams) => {
 }
 
 const findCommandByKey = (input) => {
-    const commandKey = sParam.split(' ')[0];
+    const commandKey = input.split(' ')[0];
     const command = commands[commandKey];
     if (command) {
         return { commandKey: commandKey, command };
@@ -25,9 +25,10 @@ const findCommandByKey = (input) => {
 }
 
 const findCommandByPrefix = (input) => {
+    const trimmedInput = input.trim().toLowerCase();
     for (const key in commands) {
         const command = commands[key];
-        if (command.prefix && input.startsWith(command.prefix)) {
+        if (command.prefix && trimmedInput.startsWith(command.prefix)) {
             return { commandKey: command.prefix, command };
         }
     }
