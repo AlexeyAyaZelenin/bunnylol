@@ -19,7 +19,7 @@ const commands = {
         url: "https://ayadev.atlassian.net/wiki/search?text=%s"
     },
     tcv: {
-        prefix: "TCV-",
+        prefix: "tcv-",
         name: "Aya Ticketing System - TCV set",
         url: "https://ayadev.atlassian.net/browse/TCV-{0}"
     }
