@@ -22,5 +22,10 @@ const commands = {
         prefix: "tcv-",
         name: "Aya Ticketing System - TCV set",
         url: "https://ayadev.atlassian.net/browse/TCV-{0}"
+    },
+    nova: {
+        name: "Nova",
+        url: "https://nova-{0}.ayahealthcare.com/",
+        description: "Usage: nova <environment>"
     }
 };
