@@ -43,9 +43,11 @@ const showAllCommands = () => {
     const cellName = row.insertCell(1);
     cellKey.innerHTML = '<b>Command</b>';
     cellName.innerHTML = '<b>Name</b>';
+
+    const body = table.createTBody();
     
     Object.keys(commands).forEach(key => {
-        const row = table.insertRow();
+        const row = body.insertRow();
         const cellKey = row.insertCell(0);
         const cellName = row.insertCell(1);
         cellKey.innerHTML = key;
