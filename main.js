@@ -41,8 +41,10 @@ const showAllCommands = () => {
     const row = head.insertRow();
     const cellKey = row.insertCell(0);
     const cellName = row.insertCell(1);
+    const cellDescription = row.insertCell(2);
     cellKey.innerHTML = '<b>Command</b>';
     cellName.innerHTML = '<b>Name</b>';
+    cellDescription.innerHTML = '<b>Description</b>';
 
     const body = table.createTBody();
     
@@ -50,9 +52,10 @@ const showAllCommands = () => {
         const row = body.insertRow();
         const cellKey = row.insertCell(0);
         const cellName = row.insertCell(1);
+        const cellDescription = row.insertCell(2);
         cellKey.innerHTML = key;
         cellName.innerHTML = commands[key].name;
-        console.log(`${key}: ${commands[key].name}`);
+        cellDescription.innerHTML = commands[key].description ?? '';
     });
     document.body.appendChild(table);
 };

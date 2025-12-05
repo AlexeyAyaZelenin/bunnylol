@@ -1,3 +1,8 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #FFF;
+}
 table {
     width: auto;
     border-collapse: collapse;
@@ -7,7 +12,6 @@ td {
     padding: 8px;
     text-align: left;
     font-weight: normal;
-    background-color: #ffffff;
 }
 table thead td {
     background-color: #f2f2f2;
