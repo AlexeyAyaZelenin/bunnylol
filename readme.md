@@ -50,7 +50,7 @@ To setup your own version of the "bunnylol" application, follow these steps:
     - Simply open the "General" settings
 ![General settings](assets/image4.png)
     - Scroll down to the "Danger Zone" section and click the link "Change visibility"
-![Change Visibility](image5.png) and confirm the change to "Public"
+![Change Visibility](assets/image5.png) and confirm the change to "Public"
 4. Save the settings. Your application should now be live at `https://<your-github-username>.github.io/bunnylol/`. In my case it's [https://alexeyayazelenin.github.io/bunnylol/](https://alexeyayazelenin.github.io/bunnylol/)
 5. If you open this URL in your browser, you should see the list of commands defined in the `commands.js` file.
 6. To set up the "smart URL" in your browser, open the settings and navigate to the "Search engine" section.
