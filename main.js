@@ -82,7 +82,7 @@ const processRedirect = () =>{
                     : prepareCommandUrl(command.searchUrl || command.url, urlParams)
                 : command.url;
             console.log(`Redirecting to ${finalUrl}`);
-            //window.location.href = finalUrl;
+            window.location.href = finalUrl;
         } else {
             // Check by prefix
             console.log(`Command not found for key: ${commandKey}`);
