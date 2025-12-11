@@ -5,12 +5,17 @@ const getSParam = () => {
     return sParam;
 }
 
-const prepareCommandUrl = (urlTemplate, urlParams) => {
-    let preparedUrl = urlTemplate;
-    const paramsArray = urlParams.split(' ');
+const replaceParameters = (template, params) => {
+    let result = template;
+    const paramsArray = params.split(' ');
     paramsArray.forEach((param, index) => {
-        preparedUrl = preparedUrl.replace(`{${index}}`, param);
+        result = result.replace(`{${index}}`, param);
     });
+    return result;
+}
+
+const prepareCommandUrl = (urlTemplate, urlParams) => {
+    let preparedUrl = replaceParameters(urlTemplate, urlParams);
     preparedUrl = preparedUrl.replace('%s', urlParams);
     return preparedUrl;
 }
@@ -33,6 +38,11 @@ const findCommandByPrefix = (input) => {
         }
     }
     return null;
+}
+
+const getDefaultCommand = (input) => {
+    const command = Object.values(commands).find((cmd) => cmd.default);
+    return !!command ? { commandKey: '', command } : null;
 }
 
 const showAllCommands = () => {
@@ -63,14 +73,16 @@ const showAllCommands = () => {
 const processRedirect = () =>{
     const sParam = getSParam();
     if (sParam) {
-        const { commandKey, command } = findCommandByKey(sParam) || findCommandByPrefix(sParam) || {};
+        const { commandKey, command } = findCommandByKey(sParam) || findCommandByPrefix(sParam) || getDefaultCommand(sParam) || {};
         if (command) {
             const urlParams = sParam.substring(commandKey.length).trim();
-            const finalUrl = urlParams 
-                ? prepareCommandUrl(command.searchUrl || command.url, urlParams) 
+            const finalUrl = urlParams
+                ? command.rules 
+                    ? buildRulesUrl(command, urlParams) 
+                    : prepareCommandUrl(command.searchUrl || command.url, urlParams)
                 : command.url;
             console.log(`Redirecting to ${finalUrl}`);
-            window.location.href = finalUrl;
+            //window.location.href = finalUrl;
         } else {
             // Check by prefix
             console.log(`Command not found for key: ${commandKey}`);
@@ -80,7 +92,20 @@ const processRedirect = () =>{
         console.log('No S Param provided');
         showAllCommands();
     }
+}
 
+const buildRulesUrl = (command, urlParams) => {
+    for(let rule of command.rules) {
+        const condition = replaceParameters(rule.condition, urlParams);
+        try {
+            if (eval(condition)) {
+                return prepareCommandUrl(rule.url, urlParams);
+            }
+        } catch {
+        }
+    }
+
+    return prepareCommandUrl(command.url, urlParams);
 }
 
 (function () {

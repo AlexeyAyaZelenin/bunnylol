@@ -37,6 +37,46 @@ In addition to the simple one-word commands, you can also use commands with para
 - **TCV-1234** &#8212;
   Leads to the specific ticket page in Jira TCV-1234. The prefix **TCV-** is automatically recognized as a ticket command.
 
+## Commands With Rules
+ The idea of rules is to have more complex commands that can lead to different URLs based on the parameters provided. Parameters after the command are evaluated against a set of conditions, and the first matching condition determines the URL to be used.
+
+ ### Examples
+
+Full command looks like this:
+
+```javascript
+    'test-command': {
+        name: "Test Command",
+        rules: [
+            { 
+                condition: "{0} > 10",
+                url: "https://example.com/greater-than-10"
+            },
+            {
+                condition: "{0} <= 10",
+                url: "https://example.com/less-equal-10"
+            },
+            {
+                condition: "'{0}' == 'unknown'",
+                url: "https://example.com/unknown"
+            }
+        ],
+        url: "https://example.com/default",
+    }
+```
+
+ - Condition: `"{0} > 10"` will be triggered if the first parameter after the command is greater than 10.\
+ Full url looks like this: <u>https://<bunnylol>/s=test-command 15</u>
+ - Condition: `"'{0}' === 'unknown'"` will be triggered if the first parameter after the command is exactly "unknown".\
+ Full url looks like this: <u>https://<bunnylol>/s=test-command unknown</u>
+ - If none of the conditions are met, the default URL <u>"https://example.com/default"</u> will be used.
+
+> Note: To compare string values in conditions, make sure to enclose them in quotes as shown in the example above.
+
+## Default Command
+
+If command is not found by any key, deafult command will be used, if defined. Default command is marked with `"default": true` property in the command definition.
+
 ## Setup
 
 To setup your own version of the "bunnylol" application, follow these steps:
@@ -91,6 +131,10 @@ Each command is represented by JSON object with the following structure:
   - `%s` as a placeholder for the whole search string following the command.
   - `{0}`, `{1}`, ... as placeholders for individual words in the search string.
 - `description`: (optional) A brief description of what the command does. This is used in the commands list display.
+- `rules`: (optional) An array of rule objects that define conditions and corresponding URLs. Each rule object contains:
+  - `condition`: A string representing a JavaScript expression that evaluates to true or false. The expression can use `{0}`, `{1}`, etc. as placeholders for individual words in the search string.
+  - `url`: The URL to be used if the condition evaluates to true.
+- `default`: (optional) A boolean flag indicating if this command should be used as the default command when no other command matches. If more than one command is marked as default, the first one found will be used.
 
 If command is not found or not defined, script will display the list of all available commands.
 
