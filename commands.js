@@ -29,11 +29,14 @@ const commands = {
         url: "https://nova-{0}.ayahealthcare.com/",
         description: "Usage: nova <environment>"
     },
-    'nova-int': {
-        prefix: "nv int",
-        name: "Nova",
-        url: "https://nova-int.ayahealthcare.com/",
-        description: "Usage: nova <environment>"
+    workday: {
+        name: "Workday",
+        url: "https://wd501.myworkday.com/wday/authgwy/ayahealthcare/login.htmld?returnTo=%2fayahealthcare%2fd%2fhome.htmld",
+        description: "Aya Workday Login Page"
+    },
+    sqlstat: {
+        name: "SQL Query Statistics Parser",
+        url: "https://statisticsparser.com/",
     },
     'test-command': {
         name: "Test Command",
