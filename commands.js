@@ -55,6 +55,14 @@ const commands = {
             }
         ],
         url: "https://example.com/default1",
+    },
+    help: {
+        name: "Help - show commands list",
+    },
+    moneyMovement: {
+        name: "Money Movement - Explained",
+        prefix: "money-movement",
+        url: "https://ayadev.atlassian.net/wiki/spaces/PT/pages/4252959401/Taxable+Nontaxable+fields+and+Stipends+Exception+explained"
     }
 
 };

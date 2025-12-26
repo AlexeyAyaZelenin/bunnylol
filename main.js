@@ -75,23 +75,19 @@ const processRedirect = () =>{
     if (sParam) {
         const { commandKey, command } = findCommandByKey(sParam) || findCommandByPrefix(sParam) || getDefaultCommand(sParam) || {};
         if (command) {
-            const urlParams = sParam.substring(commandKey.length).trim();
-            const finalUrl = urlParams
-                ? command.rules 
-                    ? buildRulesUrl(command, urlParams) 
-                    : prepareCommandUrl(command.searchUrl || command.url, urlParams)
-                : command.url;
-            console.log(`Redirecting to ${finalUrl}`);
-            window.location.href = finalUrl;
-        } else {
-            // Check by prefix
-            console.log(`Command not found for key: ${commandKey}`);
-            showAllCommands();
+            if(command.rules || command.url || command.searchUrl) {
+                const urlParams = sParam.substring(commandKey.length).trim();
+                const finalUrl = urlParams
+                    ? command.rules 
+                        ? buildRulesUrl(command, urlParams) 
+                        : prepareCommandUrl(command.searchUrl || command.url, urlParams)
+                    : command.url;
+                console.log(`Redirecting to ${finalUrl}`);
+                window.location.href = finalUrl;
+            }
         }
-    } else {
-        console.log('No S Param provided');
-        showAllCommands();
     }
+    showAllCommands();
 }
 
 const buildRulesUrl = (command, urlParams) => {
