@@ -26,8 +26,36 @@ const commands = {
     },
     nova: {
         name: "Nova",
+        rules: [
+            {
+                condition: "{0} == 'prod' || {0} == 'production'",
+                url: "https://nova.ayahealthcare.com/",
+            },
+            {
+                condition: "{0} == 'dev' || {0} == 'developent' || {0} == 'develop'",
+                url: "https://nova-dev.ayahealthcare.com/",
+            },
+            {
+                condition: "{0} == 'local' || {0} == 'localhost'",
+                url: "http://localhost:4201/",
+            }
+        ],
         url: "https://nova-{0}.ayahealthcare.com/",
         description: "Usage: nova <environment>"
+    },
+    swagger: {
+        name: "Aya Swagger API Docs",
+        rules: [
+            { 
+                condition: "{0} == 'dev' || {0} == 'development' || {0} == 'develop'",
+                url: "https://api-dev.ayahealthcare.com/swagger/index.html"
+            },
+            { 
+                condition: "{0} == 'local' || {0} == 'localhost'",
+                url: "http://localhost:8088/swagger/index.html"
+            }
+        ],
+        url: "https://api.ayahealthcare.com/swagger/index.html"
     },
     workday: {
         name: "Workday",
